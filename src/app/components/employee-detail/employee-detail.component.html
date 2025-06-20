@@ -1,0 +1,122 @@
+<div *ngIf="employee">
+  <div style="margin-bottom:2rem;">
+    <button (click)="goBack()" style="background:none; border:none; color:#2563eb; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:0.25rem; font-size:1rem;">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      Back to Employee List
+    </button>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:1.5rem;">
+    <!-- Header -->
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <h2 style="font-size:1.5rem; font-weight:bold; color:#222;">Employee Profile</h2>
+    </div>
+
+    <!-- Employee Overview -->
+    <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:2rem;">
+      <div style="display:grid; grid-template-columns:1fr 2fr; gap:2rem; align-items:flex-start;">
+        <!-- Left Column: Profile Card -->
+        <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:2rem; text-align:center;">
+          <div *ngIf="employee.avatar; else placeholder" style="width:7rem; height:7rem; border-radius:999px; overflow:hidden; margin:0 auto 1rem;">
+            <img [src]="employee.avatar" [alt]="employee.name" style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+          <ng-template #placeholder>
+            <div style="width:7rem; height:7rem; border-radius:999px; background:#e5e7eb; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem;">
+              <svg width="48" height="48" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+            </div>
+          </ng-template>
+          <h2 style="font-size:1.5rem; font-weight:bold; color:#222;">{{ employee.name }}</h2>
+          <p style="font-size:1rem; color:#666; margin-bottom:1rem;">{{ employee.role }}</p>
+          <p style="font-size:1.1rem; color:#888; margin:0 0 1rem 0;">{{ employee.department }}</p>
+          <div style="display:flex; gap:1.5rem; font-size:0.95rem; color:#666;">
+            <span>📧 {{ employee.email }}</span>
+            <span>⏱️ {{ employee.tenure }}</span>
+            <span>🟢 Last active: {{ employee.lastActive }}</span>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <span style="font-size:0.85rem; color:#888; font-weight:500; letter-spacing:0.5px;">AI Score</span>
+          <div [ngStyle]="{ display: 'inline-block', minWidth: '4.5rem', fontSize: '2.2rem', fontWeight: 'bold', margin: '0.5rem 0', color: getScoreColor(employee.hiddenGemScore), background: '#f1f5f9', borderRadius: '1.5rem', padding: '0.5rem 1.5rem', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }">
+            {{ employee.hiddenGemScore }}
+          </div>
+          <p style="font-size:0.95rem; color:#666; font-weight:500; margin-bottom:1.25rem;">Hidden Gem Score</p>
+          <!-- AI Score Breakdown -->
+          <div style="background:#f8fafc; border-radius:1rem; border:1px solid #e5e7eb; display:inline-block; padding:1.25rem 2rem; margin-bottom:0.5rem; text-align:left;">
+            <div style="font-size:0.8rem; color:#888; font-weight:500; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem;">
+              <span>Powered by</span>
+              <img src="https://www.tensorflow.org/images/tf_logo_social.png" style="height:14px;" alt="TensorFlow"/>
+            </div>
+            <span style="font-size:1rem; color:#2563eb; font-weight:600; letter-spacing:0.5px;">TensorFlow.js Score Breakdown</span>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 2.5rem; margin-top:0.75rem;">
+              <div>Task Consistency: <b>{{ employee.metrics.taskConsistency }}%</b></div>
+              <div>Peer Recognition: <b>{{ employee.metrics.peerRecognition }}%</b></div>
+              <div>Visibility Gap: <b>{{ employee.metrics.visibilityGap }}%</b></div>
+              <div>Collaboration: <b>{{ employee.metrics.collaboration }}%</b></div>
+              <div>Learning Participation: <b>{{ employee.metrics.learningParticipation }}%</b></div>
+              <div>Recognition Gap: <b>{{ employee.metrics.recognitionGap }}%</b></div>
+              <div>Tasks Completed: <b>{{ employee.tasksCompleted }}</b></div>
+              <div>Kudos Received: <b>{{ employee.kudosReceived }}</b></div>
+              <div>Courses Completed: <b>{{ employee.coursesCompleted }}</b></div>
+              <div>Commit Count: <b>{{ employee.commitCount }}</b></div>
+              <div>Tenure: <b>{{ employee.tenure }}</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Statistics -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1.5rem;">
+      <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:1.5rem; text-align:center;">
+        <div style="font-size:2rem; font-weight:bold; color:#2563eb; margin-bottom:0.5rem;">{{ employee.tasksCompleted }}</div>
+        <p style="font-size:0.95rem; color:#666;">Tasks Completed</p>
+      </div>
+      <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:1.5rem; text-align:center;">
+        <div style="font-size:2rem; font-weight:bold; color:#16a34a; margin-bottom:0.5rem;">{{ employee.kudosReceived }}</div>
+        <p style="font-size:0.95rem; color:#666;">Kudos Received</p>
+      </div>
+      <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:1.5rem; text-align:center;">
+        <div style="font-size:2rem; font-weight:bold; color:#7c3aed; margin-bottom:0.5rem;">{{ employee.coursesCompleted }}</div>
+        <p style="font-size:0.95rem; color:#666;">Courses Completed</p>
+      </div>
+      <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:1.5rem; text-align:center;">
+        <div style="font-size:2rem; font-weight:bold; color:#ea580c; margin-bottom:0.5rem;">{{ employee.commitCount }}</div>
+        <p style="font-size:0.95rem; color:#666;">Code Commits</p>
+      </div>
+    </div>
+
+    <!-- Metrics Breakdown -->
+    <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:2rem;">
+      <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1.5rem;">Performance Metrics</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:2rem;">
+        <ng-container *ngFor="let key of (employee.metrics | keyvalue)">
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.95rem; font-weight:500; color:#444;">{{ metricLabels[key.key] }}</span>
+              <span style="font-size:0.95rem; font-weight:bold; color:#222;">{{ key.value }}%</span>
+            </div>
+            <div style="width:100%; background:#e5e7eb; border-radius:999px; height:0.75rem;">
+              <div [ngStyle]="{ background: key.value >= 90 ? '#22c55e' : key.value >= 80 ? '#2563eb' : key.value >= 70 ? '#fb923c' : '#f87171', width: key.value + '%', height: '0.75rem', borderRadius: '999px', transition: 'width 0.5s' }"></div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Recent Achievements -->
+    <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:2rem;">
+      <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1.5rem;">Recent Achievements</h3>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div *ngFor="let achievement of employee.recentAchievements; let i = index" style="display:flex; align-items:flex-start; gap:0.75rem;">
+          <div style="width:0.5rem; height:0.5rem; background:#2563eb; border-radius:999px; margin-top:0.5rem; flex-shrink:0;"></div>
+          <p style="color:#444; margin:0;">{{ achievement }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Career Path & Skill Gap Analysis -->
+  <div style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:2rem;">
+    <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1.5rem;">Potential Career Paths</h3>
+    <app-career-path [currentRole]="employee.role" [skills]="employee.skills || []"></app-career-path>
+  </div>
+</div>

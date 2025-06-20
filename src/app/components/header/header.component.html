@@ -1,0 +1,77 @@
+<header style="background:#fff; box-shadow:0 1px 4px rgba(0,0,0,0.04); border-bottom:1px solid #e5e7eb;">
+  <div style="max-width:1200px; margin:0 auto; padding:1rem 2rem;">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:2rem;">
+        <div style="display:flex; align-items:center; gap:0.75rem; position:relative;">
+          <div>
+            <h1 style="font-size:1.5rem; font-weight:bold; color:#222; margin:0;">Hidden Gem Identifier</h1>
+            <p style="font-size:0.95rem; color:#666; margin:0;">Discover your organization's unsung heroes</p>
+          </div>
+        </div>
+        <nav style="display:flex; gap:0.5rem;">
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="active-link"
+            class="nav-button">
+            Dashboard
+          </a>
+          <a
+            routerLink="/employees"
+            routerLinkActive="active-link"
+            class="nav-button">
+            Hidden Gems
+          </a>
+          <a
+            routerLink="/org-chart"
+            routerLinkActive="active-link"
+            class="nav-button">
+            Org Chart
+          </a>
+        </nav>
+      </div>
+      <div style="display:flex; align-items:center; gap:1rem; position:relative;">
+        <div style="text-align:right;">
+          <p style="font-size:1rem; font-weight:500; color:#222; margin:0;">HR Analytics Team</p>
+          <p style="font-size:0.85rem; color:#666; margin:0;">Last updated: 2 hours ago</p>
+        </div>
+        <!-- Search Button -->
+        <button (click)="toggleSearch()" aria-label="Toggle search" style="background:none; border:none; cursor:pointer; outline:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1.5rem; height:1.5rem; color:#222;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+        </button>
+        <!-- Dark Mode Toggle -->
+        <button (click)="toggleDarkMode()" [attr.aria-label]="darkMode ? 'Switch to light mode' : 'Switch to dark mode'" style="background:none; border:none; cursor:pointer; outline:none;">
+          <span *ngIf="!darkMode" style="font-size:1.5rem; color:#2563eb;">🌞</span>
+          <span *ngIf="darkMode" style="font-size:1.5rem; color:#facc15;">🌙</span>
+        </button>
+        <!-- Search Input -->
+        <div *ngIf="showSearch" style="position:absolute; top:100%; right:0; background-color:white; border-radius:0.5rem; padding:0.5rem; box-shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); margin-top:0.5rem; z-index:10;">
+          <input 
+            type="text" 
+            [formControl]="searchControl"
+            placeholder="Search employees..." 
+            style="padding:0.5rem; border:1px solid #d1d5db; border-radius:0.25rem;"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<style>
+  .nav-button {
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #666;
+    text-decoration: none;
+  }
+  .nav-button.active-link {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+</style>

@@ -1,0 +1,112 @@
+<!-- Export Button -->
+<div style="display:flex; justify-content:flex-end; margin-bottom:0.5rem;">
+  <button (click)="exportHiddenGemsCSV()" style="background:#16a34a; color:#fff; font-weight:600; border:none; border-radius:0.5rem; padding:0.6rem 1.4rem; font-size:1rem; box-shadow:0 2px 8px rgba(22,163,74,0.08); cursor:pointer; transition:background 0.2s;">
+    ⬇️ Export Hidden Gems (CSV)
+  </button>
+</div>
+
+<!-- Score Calculation Details Button -->
+<div style="display:flex; justify-content:flex-end; margin-bottom:2rem;">
+  <button (click)="openScoreModal()" style="background:#2563eb; color:#fff; border:none; border-radius:0.5rem; padding:0.5rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer; box-shadow:0 1px 4px rgba(37,99,235,0.08); transition:background 0.2s;">
+    ℹ️ Score Calculation Details
+  </button>
+</div>
+
+<!-- Header -->
+<div class="dashboard-header" style="text-align:center; margin-bottom: 2rem;">
+  <h2 style="font-size:2rem; font-weight:bold; color:#222; margin-bottom:0.5rem;">Analytics Dashboard</h2>
+  <p style="font-size:1.1rem; color:#666;">Identifying and celebrating your organization's hidden talent</p>
+</div>
+
+<!-- Score Calculation Modal -->
+<div *ngIf="showScoreModal" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:1000;">
+  <div style="position:absolute; top:0; right:0; height:100vh; width:400px; max-width:90vw; background:#fff; border-radius:1rem 0 0 1rem; box-shadow:-4px 0 32px rgba(0,0,0,0.12); padding:2rem; display:flex; flex-direction:column; align-items:flex-start; animation:slideInRight 0.3s cubic-bezier(0.4,0,0.2,1);">
+    <button (click)="closeScoreModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; color:#888; cursor:pointer;">&times;</button>
+    <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+      <span style="font-size:0.9rem; color:#888; font-weight:500;">Powered by</span>
+      <img src="https://www.tensorflow.org/images/tf_logo_social.png" style="height:16px;" alt="TensorFlow"/>
+    </div>
+    <h3 style="font-size:1.3rem; font-weight:600; color:#222; margin-bottom:1rem;">How is the Hidden Gem Score calculated?</h3>
+    <p style="color:#444; font-size:1rem; margin-bottom:1rem;">The Hidden Gem Score is calculated using a TensorFlow.js model that combines these features:</p>
+    <ul style="color:#444; font-size:0.98rem; margin-bottom:1rem; padding-left:1.2rem;">
+      <li><b>Task Consistency</b> (weight: 0.15)</li>
+      <li><b>Peer Recognition</b> (weight: 0.15)</li>
+      <li><b>Visibility Gap</b> (weight: 0.10)</li>
+      <li><b>Collaboration</b> (weight: 0.10)</li>
+      <li><b>Learning Participation</b> (weight: 0.10)</li>
+      <li><b>Recognition Gap</b> (weight: 0.10)</li>
+      <li><b>Tasks Completed</b> (weight: 0.10, normalized)</li>
+      <li><b>Kudos Received</b> (weight: 0.10, normalized)</li>
+      <li><b>Courses Completed</b> (weight: 0.05, normalized)</li>
+      <li><b>Commit Count</b> (weight: 0.05, normalized)</li>
+      <li><b>Tenure</b> (weight: 0.10, normalized)</li>
+    </ul>
+    <p style="color:#666; font-size:0.97rem;">Each feature is normalized and weighted, and the final score is calculated using a linear model in TensorFlow.js. This highlights employees who consistently deliver value, collaborate, and grow, even if they aren't always in the spotlight.</p>
+  </div>
+</div>
+
+<style>
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+</style>
+
+<!-- Key Metrics -->
+<div class="dashboard-metrics" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem; margin-bottom:2rem;">
+  <app-metric-card
+    title="Total Employees"
+    [value]="totalEmployees.toString()"
+    subtitle="Under analysis"
+    trend="stable"
+    color="blue">
+  </app-metric-card>
+  <app-metric-card
+    title="Average Score"
+    [value]="averageScore.toString()"
+    subtitle="Organization average"
+    trend="up"
+    color="green">
+  </app-metric-card>
+  <app-metric-card
+    title="Hidden Gems"
+    [value]="hiddenGems.toString()"
+    subtitle="Score ≥ 80"
+    trend="up"
+    color="purple">
+  </app-metric-card>
+  <app-metric-card
+    title="Trending Up"
+    [value]="trendingUp.toString()"
+    subtitle="Improving performers"
+    trend="up"
+    color="orange">
+  </app-metric-card>
+</div>
+
+<!-- Charts and Performance Overview -->
+<div class="dashboard-charts" style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2rem;">
+  <div class="dashboard-chart-card" style="background:#fff; border:1px solid #eee; border-radius:1rem; padding:1.5rem;">
+    <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1rem;">Score Distribution</h3>
+    <app-score-chart [employees]="filteredEmployees"></app-score-chart>
+  </div>
+  <div class="dashboard-chart-card" style="background:#fff; border:1px solid #eee; border-radius:1rem; padding:1.5rem;">
+    <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1rem;">Top Hidden Gems</h3>
+    <app-top-performers [employees]="filteredEmployees" (employeeSelect)="onEmployeeSelect($event)"></app-top-performers>
+  </div>
+</div>
+
+<!-- Department Overview -->
+<div class="dashboard-departments" style="background:#fff; border:1px solid #eee; border-radius:1rem; padding:1.5rem;">
+  <h3 style="font-size:1.2rem; font-weight:600; color:#222; margin-bottom:1.5rem;">Department Breakdown</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:1rem;">
+    <div *ngFor="let dept of departments" style="background:#f8f9fa; border-radius:0.5rem; padding:1rem; text-align:center;">
+      <h4 style="font-weight:500; color:#222; margin-bottom:0.5rem;">{{ dept.name }}</h4>
+      <div>
+        <p style="font-size:1.5rem; font-weight:bold; color:#2563eb; margin:0;">{{ dept.avgScore }}</p>
+        <p style="font-size:0.8rem; color:#666; margin:0;">Avg Score</p>
+        <p style="font-size:1rem; color:#16a34a; margin:0;">{{ dept.gems }} gems</p>
+      </div>
+    </div>
+  </div>
+</div>

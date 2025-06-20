@@ -1,0 +1,27 @@
+<div style="padding: 2rem;">
+  <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">
+    Search Results for "{{ query }}"
+  </h2>
+  
+  <div *ngIf="results$ | async as results; else loading">
+    <div *ngIf="results.length > 0; else noResults" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+      <app-employee-card 
+        *ngFor="let employee of results" 
+        [employee]="employee"
+        (click)="onEmployeeClick(employee)"
+        style="cursor: pointer;"
+      ></app-employee-card>
+    </div>
+    <ng-template #noResults>
+      <p style="text-align: center; color: #666; padding: 2rem;">
+        No employees found matching your search.
+      </p>
+    </ng-template>
+  </div>
+  
+  <ng-template #loading>
+    <p style="text-align: center; color: #666; padding: 2rem;">
+      Loading results...
+    </p>
+  </ng-template>
+</div>

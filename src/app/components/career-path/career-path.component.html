@@ -1,0 +1,30 @@
+<div *ngIf="possibleNextRoles.length > 0; else noPath">
+  <div style="display:flex; flex-direction:column; gap:1.5rem;">
+    <div *ngFor="let path of possibleNextRoles" style="background:#f8f9fa; border-radius:0.5rem; padding:1.5rem;">
+      <h4 style="font-size:1.1rem; font-weight:600; color:#222; margin-bottom:1rem;">Next Role: {{ path.role }}</h4>
+      <div style="margin-bottom:1rem;">
+        <p style="font-weight:500; margin-bottom:0.5rem;">Skill Progression:</p>
+        <div style="width:100%; background:#e5e7eb; border-radius:999px; height:1rem; display:flex;">
+          <div [ngStyle]="{ 'width': (path.skillsMet / (path.skillsMet + path.skillsToLearn)) * 100 + '%', 'background-color': '#22c55e', 'border-radius': '999px 0 0 999px' }"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:#666; margin-top:0.25rem;">
+          <span>{{ path.skillsMet }} skills met</span>
+          <span>{{ path.skillsToLearn }} skills to learn</span>
+        </div>
+      </div>
+      <div *ngIf="path.skillsToLearn > 0">
+        <p style="font-weight:500; margin-bottom:0.5rem;">Skills to Learn:</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <span *ngFor="let skill of path.skillsToLearnList" style="background:#dbeafe; color:#2563eb; padding:0.25rem 0.75rem; border-radius:999px; font-size:0.85rem; font-weight:500;">
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #noPath>
+  <div style="text-align:center; padding:2rem; background:#f8f9fa; border-radius:0.5rem;">
+    <p style="color:#666;">No further career path defined for this role yet.</p>
+  </div>
+</ng-template>

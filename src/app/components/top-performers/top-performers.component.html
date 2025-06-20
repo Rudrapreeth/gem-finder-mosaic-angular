@@ -1,0 +1,26 @@
+<div class="top-performers" style="display:flex; flex-direction:column; gap:0.75rem;">
+  <div *ngFor="let employee of topPerformers; let i = index"
+       (click)="onSelect(employee)"
+       style="display:flex; align-items:center; gap:1rem; padding:0.75rem; border-radius:0.75rem; cursor:pointer; transition:background 0.2s;"
+       onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background='none'">
+    <div [ngStyle]="{ width: '2rem', height: '2rem', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '1rem', background: getBadgeColor(i) }">
+      {{ i + 1 }}
+    </div>
+    <div *ngIf="employee.avatar; else placeholder" style="width:2.5rem; height:2.5rem; border-radius:999px; overflow:hidden;">
+      <img [src]="employee.avatar" [alt]="employee.name" style="width:100%; height:100%; object-fit:cover;" />
+    </div>
+    <ng-template #placeholder>
+      <div style="width:2.5rem; height:2.5rem; border-radius:999px; background:#e5e7eb; display:flex; align-items:center; justify-content:center;">
+        <svg width="20" height="20" fill="none" stroke="#9ca3af" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+      </div>
+    </ng-template>
+    <div style="flex:1;">
+      <p style="font-weight:500; color:#222; margin:0;">{{ employee.name }}</p>
+      <p style="font-size:0.95rem; color:#666; margin:0;">{{ employee.role }}</p>
+    </div>
+    <div style="text-align:right;">
+      <p style="font-size:1.2rem; font-weight:bold; color:#2563eb; margin:0;">{{ employee.hiddenGemScore }}</p>
+      <p style="font-size:0.8rem; color:#888; margin:0;">Score</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="metric-card" style="background:#fff; border-radius:1rem; box-shadow:0 1px 4px rgba(0,0,0,0.04); border:1px solid #e5e7eb; padding:1.5rem; transition:transform 0.2s;">
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+    <h3 style="font-size:0.95rem; font-weight:500; color:#666;">{{ title }}</h3>
+    <ng-container *ngIf="trend !== 'stable'">
+      <span [ngStyle]="{ color: trend === 'up' ? '#16a34a' : '#dc2626', display: 'flex', alignItems: 'center' }">
+        <ng-container *ngIf="trend === 'up'">
+          <!-- Up arrow SVG -->
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </ng-container>
+        <ng-container *ngIf="trend === 'down'">
+          <!-- Down arrow SVG -->
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 7L7 17M17 17V7H7"/></svg>
+        </ng-container>
+      </span>
+    </ng-container>
+  </div>
+  <div style="margin-bottom:0.5rem;">
+    <p [ngStyle]="getValueStyle()" style="font-size:2rem; font-weight:bold; margin:0;">{{ value }}</p>
+    <p style="font-size:0.95rem; color:#888; margin:0;">{{ subtitle }}</p>
+  </div>
+</div>

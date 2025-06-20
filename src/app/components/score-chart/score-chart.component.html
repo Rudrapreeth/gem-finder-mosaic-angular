@@ -1,0 +1,13 @@
+<div class="score-chart" style="display:flex; flex-direction:column; gap:1rem;">
+  <div *ngFor="let range of scoreRanges">
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <div style="width:3.5rem; font-size:0.95rem; font-weight:500; color:#666;">{{ range.label }}</div>
+      <div style="flex:1; background:#e5e7eb; border-radius:999px; height:0.75rem; position:relative;">
+        <div 
+          [ngStyle]="{ background: range.color, width: getPercentage(getCount(range), getMaxCount()) + '%', height: '0.75rem', borderRadius: '999px', transition: 'width 0.5s' }">
+        </div>
+      </div>
+      <div style="width:2rem; font-size:0.95rem; font-weight:500; color:#222; text-align:right;">{{ getCount(range) }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="org-chart-header">
+  <button (click)="goBack()" class="back-button">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    Back
+  </button>
+  <h1>Organization Chart</h1>
+</div>
+
+<div class="chart-container-wrapper">
+  <div #chartContainer></div>
+</div>
+
+<style>
+  /*
+    We are adding component-specific styles for the d3-org-chart nodes here.
+    These styles are scoped to this component and won't leak globally.
+    They target the classes that we will add to the nodeContent formatter.
+  */
+  .node-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+  }
+  .node-container:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .node-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+  }
+  .node-avatar-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+    background-color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .node-name {
+    font-weight: 600;
+    color: #1a202c;
+  }
+  .node-role {
+    font-size: 0.875rem;
+    color: #4a5568;
+  }
+</style>
