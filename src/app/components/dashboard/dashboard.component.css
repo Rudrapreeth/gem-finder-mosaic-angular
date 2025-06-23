@@ -1,1 +1,38 @@
+/* Essential dark mode fix for Department Breakdown */
+body.dark-mode .dashboard-departments {
+  background: #23232a !important;
+  border-color: #27272a !important;
+}
+body.dark-mode .dashboard-departments h3,
+body.dark-mode .dashboard-departments h4 {
+  color: #f4f4f5 !important;
+}
+body.dark-mode .dashboard-departments > div[style*="display:grid"] > div[style*="background:#f8f9fa"],
+body.dark-mode .dashboard-departments > div[style*="display:grid"] > div[style*="background: #f8f9fa"] {
+  background: #18181b !important;
+  color: #f4f4f5 !important;
+}
+body.dark-mode .dashboard-departments p,
+body.dark-mode .dashboard-departments span {
+  color: #d4d4d8 !important;
+}
+body.dark-mode .dashboard-departments p[style*="color:#2563eb"],
+body.dark-mode .dashboard-departments p[style*="color: #2563eb"] {
+  color: #60a5fa !important;
+}
+body.dark-mode .dashboard-departments p[style*="color:#16a34a"],
+body.dark-mode .dashboard-departments p[style*="color: #16a34a"] {
+  color: #4ade80 !important;
+}
+body.dark-mode .dashboard-departments p[style*="color:#666"],
+body.dark-mode .dashboard-departments p[style*="color: #666"] {
+  color: #a1a1aa !important;
+}
+body.dark-mode .dashboard-departments > div[style*="display:grid"] > div[style*="background:#f8f9fa"] h4,
+body.dark-mode .dashboard-departments > div[style*="display:grid"] > div[style*="background: #f8f9fa"] h4 {
+  color: #18181b !important;
+}
 
+.dashboard-departments h4 {
+  color: #000 !important;
+}
